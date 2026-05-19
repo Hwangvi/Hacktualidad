@@ -37,11 +37,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**").disable())
+                .csrf(csrf -> csrf.disable())
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
-                .securityContext((securityContext) -> securityContext.requireExplicitSave(false))
+
+                .securityContext(context -> context.requireExplicitSave(false))
+
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
@@ -79,7 +82,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/forum/topics/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/forum/comments/**").authenticated()
 
-                        // 📄 SWAGGER / DOCUMENTACIÓN
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
