@@ -9,12 +9,15 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/users`;
-
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      this.currentUserSubject.next(JSON.parse(savedUser));
+    }
+  }
 
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
@@ -30,16 +33,19 @@ export class AuthService {
       .post<User>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
       .pipe(
         tap((user) => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         })
       );
   }
 
   logout(): void {
+    localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
   public updateCurrentUser(updatedUser: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
     this.currentUserSubject.next(updatedUser);
   }
 }

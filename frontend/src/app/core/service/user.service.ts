@@ -40,11 +40,11 @@ export class UserService {
 
   register(formData: FormData): Observable<User> {
     const registerUrl = `${this.apiUrl}/register`;
-    return this.http.post<User>(registerUrl, formData);
+    return this.http.post<User>(registerUrl, formData, { withCredentials: true });
   }
 
   login(credentials: any): Observable<any> {
     const loginUrl = `${this.apiUrl}/login`;
-    return this.http.post(loginUrl, credentials);
+    return this.http.post(loginUrl, credentials, { withCredentials: true });
   }
 }

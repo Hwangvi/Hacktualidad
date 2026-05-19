@@ -13,39 +13,43 @@ export class ForumService {
   constructor(private http: HttpClient) {}
 
   getAllTopics(): Observable<Topic[]> {
-    return this.http.get<Topic[]>(`${this.baseUrl}/topics`);
+    return this.http.get<Topic[]>(`${this.baseUrl}/topics`, { withCredentials: true });
   }
 
   getPostsByTopic(topicName: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.baseUrl}/topics/${topicName}/posts`);
+    return this.http.get<Post[]>(`${this.baseUrl}/topics/${topicName}/posts`, { withCredentials: true });
   }
 
   getPostById(postId: number): Observable<Post> {
-    return this.http.get<Post>(`${this.baseUrl}/posts/${postId}`);
+    return this.http.get<Post>(`${this.baseUrl}/posts/${postId}`, { withCredentials: true });
   }
 
   createPost(topicName: string, postData: { title: string; content: string }): Observable<Post> {
-    return this.http.post<Post>(`${this.baseUrl}/topics/${topicName}/posts`, postData);
+    return this.http.post<Post>(`${this.baseUrl}/topics/${topicName}/posts`, postData, { withCredentials: true });
   }
 
   deletePost(postId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/posts/${postId}`);
+    return this.http.delete<void>(`${this.baseUrl}/posts/${postId}`, { withCredentials: true });
   }
+
   addCommentToPost(postId: number, commentData: { content: string }): Observable<Comment> {
-    return this.http.post<Comment>(`${this.baseUrl}/posts/${postId}/comments`, commentData);
+    return this.http.post<Comment>(`${this.baseUrl}/posts/${postId}/comments`, commentData, { withCredentials: true });
   }
+
   createTopicWithPhoto(formData: FormData): Observable<Topic> {
     return this.http.post<Topic>(`${this.baseUrl}/topics`, formData, { withCredentials: true });
   }
+
   updatePost(postId: number, postData: { title: string; content: string }): Observable<Post> {
-    return this.http.put<Post>(`${this.baseUrl}/posts/${postId}`, postData);
+    return this.http.put<Post>(`${this.baseUrl}/posts/${postId}`, postData, { withCredentials: true });
   }
+
   deleteTopic(topicId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/topics/${topicId}`, { withCredentials: true });
   }
 
   getAllPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.baseUrl}/posts`);
+    return this.http.get<Post[]>(`${this.baseUrl}/posts`, { withCredentials: true });
   }
 
   deleteComment(commentId: number): Observable<void> {

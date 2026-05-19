@@ -12,6 +12,6 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/all`);
+    return this.http.get<any>(`${this.baseUrl}/users`, { withCredentials: true });
   }
 }
