@@ -103,4 +103,8 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+    @Bean
+    public org.springframework.boot.web.servlet.server.CookieSameSiteSupplier cookieSameSiteSupplier() {
+        return org.springframework.boot.web.servlet.server.CookieSameSiteSupplier.ofNone();
+    }
 }
