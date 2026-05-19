@@ -49,14 +49,26 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public onSubmit(): void {
+ public onSubmit(): void {
     if (this.user.password !== this.user.confirmPassword) {
       this.showErrorAlert('ERROR DE CRIPTOGRAFÍA: Las contraseñas no coinciden.');
       return;
     }
 
     const formData = new FormData();
-    formData.append('user', JSON.stringify(this.user));
+
+    formData.append('name', this.user.name);
+    formData.append('surname', this.user.surname);
+    formData.append('address', this.user.address);
+
+    if (this.user.phone) {
+      formData.append('phone', this.user.phone.toString());
+    } else {
+      formData.append('phone', '');
+    }
+
+    formData.append('email', this.user.email);
+    formData.append('password', this.user.password);
 
     if (this.selectedFile) {
       formData.append('file', this.selectedFile, this.selectedFile.name);
