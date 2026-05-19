@@ -15,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**").disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
@@ -47,6 +46,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                        .requestMatchers("/api/users/hash/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/products").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
@@ -54,16 +57,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
-
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/categories").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasAuthority("ADMIN")
-
-
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                        .requestMatchers("/api/users/hash/**").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority("ADMIN")
@@ -71,9 +68,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
 
-
                         .requestMatchers("/api/cart/**").authenticated()
-
 
                         .requestMatchers(HttpMethod.GET, "/api/forum/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/forum/topics/*/posts").authenticated()
@@ -82,9 +77,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/forum/posts/*").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/forum/topics").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/forum/topics/**").hasAuthority("ADMIN")
-
                         .requestMatchers(HttpMethod.DELETE, "/api/forum/comments/**").authenticated()
 
+                        // 📄 SWAGGER / DOCUMENTACIÓN
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
@@ -95,18 +90,17 @@ public class SecurityConfig {
                 );
         return http.build();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "https://*.vercel.app"));
-
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); 
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
