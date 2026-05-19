@@ -1,0 +1,73 @@
+.topics-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 90px auto 40px;
+  padding: 30px;
+  border: 1px solid var(--hacker-border-color);
+  background: var(--hacker-bg-transparent);
+  box-shadow: 0 0 25px var(--hacker-glow-color);
+}
+
+.forum-title {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--hacker-green);
+  text-transform: uppercase;
+  animation: flicker 1.5s infinite alternate;
+}
+
+.topic-list {
+  list-style: none;
+  padding: 0;
+}
+
+.topic-item {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-left: 5px solid var(--hacker-green-dark);
+  margin-bottom: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.topic-item:hover {
+  background-color: rgba(0, 255, 65, 0.1);
+  border-left-color: var(--hacker-green);
+  transform: translateX(5px);
+  cursor: pointer;
+}
+
+.topic-item h3 {
+  margin: 0 0 10px 0;
+  color: var(--hacker-green);
+  font-size: 1.5rem;
+}
+
+.topic-item h3::before {
+  content: '> ';
+  opacity: 0.7;
+}
+
+.topic-item p {
+  margin: 0;
+  color: var(--hacker-text-dim);
+  font-family: var(--font-code);
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--hacker-green),
+      0 0 30px var(--hacker-green);
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}

@@ -1,0 +1,54 @@
+<div class="posibilidades-container">
+  <h1 class="glitch-title">
+    NUESTROS SERVICIOS // <span class="blink">ESTADO DEL SISTEMA: ONLINE</span>
+  </h1>
+
+  <div id="foro" class="posibilidad-card">
+    <div class="img-wrapper">
+      <img src="/images/foro.jpg" alt="Foro Hacking" />
+      <div class="scan-line"></div>
+    </div>
+    <div class="card-content">
+      <h3>FORO DE LA COMUNIDAD</h3>
+      <div class="divider"></div>
+      <p>
+        Un entorno encriptado donde discutir <span class="highlight">topics</span> del mundo del
+        <span class="hacking">hacking</span>. ¿Dudas sobre vulnerabilidades? Inicia el protocolo de
+        comunicación.
+      </p>
+      <a routerLink="/forum" class="btn-neon">ACCEDER AL FORO</a>
+    </div>
+  </div>
+
+  <div id="venta" class="posibilidad-card reverse">
+    <div class="img-wrapper">
+      <img src="/images/productos.jpg" alt="Tienda Hacking" />
+      <div class="scan-line"></div>
+    </div>
+    <div class="card-content">
+      <h3>BLACK_MARKET</h3>
+      <div class="divider"></div>
+      <p>
+        Hardware y Software de penetración al alcance de tu mano.<br />Explora nuestro inventario y
+        adquiere las herramientas necesarias para la misión.
+      </p>
+      <a routerLink="/shop" class="btn-neon red">IR A LA TIENDA</a>
+    </div>
+  </div>
+
+  <div id="noticias" class="posibilidad-card" *ngIf="isLoggedIn">
+    <div class="img-wrapper">
+      <img src="/images/perfil.jpg" alt="Perfil Usuario" />
+      <div class="scan-line"></div>
+    </div>
+    <div class="card-content">
+      <h3>ACCEDE A TU PERFIL</h3>
+      <div class="divider"></div>
+      <p>
+        Accede a tu base de datos personal.<br />Recuerda cifrar tu identidad, los ojos ajenos están
+        en todas partes.
+      </p>
+      <a [routerLink]="profileLink" class="btn-neon green">GESTIONAR DATOS</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="form-container">
+  <div class="form-wrapper">
+    <h1 *ngIf="topicName">
+      Nuevo Hilo en <span class="topic-highlight">{{ topicName }}</span>
+    </h1>
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Título del Hilo</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Introduce un título conciso..."
+        />
+        <div
+          *ngIf="postForm.controls['title'].invalid && postForm.controls['title'].touched"
+          class="error-message"
+        >
+          > Fallo de protocolo: El título debe tener al menos 5 caracteres.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Descripción</label>
+        <textarea
+          id="content"
+          formControlName="content"
+          rows="10"
+          placeholder="Redacta el contenido de tu post aquí..."
+        ></textarea>
+        <div
+          *ngIf="postForm.controls['content'].invalid && postForm.controls['content'].touched"
+          class="error-message"
+        >
+          > Fallo de protocolo: El contenido debe tener al menos 20 caracteres.
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-feedback">
+        <p><strong>ALERTA DE SISTEMA:</strong></p>
+        <p>{{ error }}</p>
+      </div>
+
+      <button type="submit" [disabled]="postForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Transmitiendo...' : 'Publicar Hilo' }}
+      </button>
+
+      <button type="button" class="btn-back" (click)="goBack()">
+        &lt; VOLVER
+      </button>
+
+    </form>
+  </div>
+</div>

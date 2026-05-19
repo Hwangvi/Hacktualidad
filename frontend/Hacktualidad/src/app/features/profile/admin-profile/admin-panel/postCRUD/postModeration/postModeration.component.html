@@ -1,0 +1,55 @@
+<div class="moderation-container">
+  <div class="header-section">
+    <h2 class="glitch" [attr.data-text]="'Moderando: ' + topicName">Moderando: {{ topicName }}</h2>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">Cargando hilos...</div>
+
+  <div *ngIf="!isLoading && posts.length > 0" class="posts-table-wrapper">
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th>Título del Post</th>
+          <th>Autor</th>
+          <th>Temática</th>
+          <th>Fecha</th>
+          <th class="actions-header">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>
+            <a [routerLink]="['/posts', post.postId]" title="Ver post en el foro" class="post-title-link">{{ post.title }}</a>
+          </td>
+          <td>{{ post.author.name }}</td>
+          <td>{{ post.topicName }}</td>
+          <td>{{ post.publicationDate | date:'dd/MM/yy HH:mm' }}</td>
+
+
+          <td class="actions-cell">
+            <a [routerLink]="['/profile/admin/forum/moderate/posts', post.postId, 'comments']"
+               class="admin-btn"
+               style="border-color: #00ccff; color: #00ccff; margin-right: 10px;">
+               Ver Comentarios
+            </a>
+
+            <a [routerLink]="['/posts', post.postId, 'edit']" class="admin-btn btn-edit">Editar</a>
+            <button (click)="deletePost(post.postId)" class="admin-btn btn-delete">Borrar</button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!isLoading && posts.length === 0" class="no-posts">
+    <p>> No hay posts en esta temática para moderar.</p>
+  </div>
+
+  <div class="footer-actions">
+    <button (click)="goBack()" class="btn-back">
+      <span>&lt; Volver a la Selección de Temáticas</span>
+    </button>
+  </div>
+
+</div>

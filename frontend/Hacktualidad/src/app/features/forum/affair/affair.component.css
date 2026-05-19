@@ -1,0 +1,132 @@
+.tematica-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: #000000;
+  margin-top: 70px;
+  padding-bottom: 50px;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'BadSignal', sans-serif;
+  font-size: 3rem;
+  margin-top: 80px;
+  color: #e0f2f1;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  width: 80%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.grid-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.grid-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  filter: brightness(0.6);
+  transition: filter 0.3s ease;
+}
+
+.grid-item:hover img {
+  filter: brightness(0.4);
+}
+
+.grid-text {
+  position: relative;
+  z-index: 2;
+  font-family: 'BadSignal', sans-serif;
+  font-size: 2.2rem;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.grid-item:hover .grid-text {
+  transform: scale(1.1);
+}
+
+.grid-item {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grid-item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.grid-item:hover .grid-item-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.grid-text {
+  z-index: 1;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    width: 90%;
+    gap: 25px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .grid-text {
+    font-size: 1.8rem;
+  }
+}

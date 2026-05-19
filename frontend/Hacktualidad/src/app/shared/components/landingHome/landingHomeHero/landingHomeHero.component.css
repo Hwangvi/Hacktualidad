@@ -1,0 +1,98 @@
+.hero {
+  height: 100vh;
+  width: 100%;
+  background: url('/images/fondo.jpeg') center center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: 'BadSignal', sans-serif;
+  font-size: clamp(1.2rem, 6vw, 3.5rem);
+  color: white;
+  font-style: italic;
+  line-height: 1.2;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  z-index: 100;
+}
+h2 {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: white;
+  font-family: 'BadSignal', sans-serif;
+  line-height: 1.2;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  z-index: 100;
+  margin-top: 1.5rem;
+}
+.frases {
+  margin-top: 20px;
+}
+
+.highlight1 {
+  color: #1d9ab9;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 0.3em;
+}
+.highlight2 {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 0.3em;
+}
+.btnLogging{
+  margin-top: 50px;
+  padding: 15px 30px;
+  font-size: 1.8rem;
+  font-family: 'BadSignal', sans-serif;
+  color: #fff;
+  background-color: #21d14d;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(29, 154, 185, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    background-position: center;
+  }
+
+  h1 {
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+    padding: 0 1rem;
+  }
+
+  .highlight {
+    font-size: 1.1em;
+  }
+}
+
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 4rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  .highlight {
+    font-size: 1.3em;
+  }
+}

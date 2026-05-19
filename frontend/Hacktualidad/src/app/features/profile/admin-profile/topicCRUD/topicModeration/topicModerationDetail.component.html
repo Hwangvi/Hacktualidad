@@ -1,0 +1,36 @@
+<div class="moderation-container">
+  <div *ngIf="isLoading" class="loading-state">Cargando datos de la temática...</div>
+
+  <div *ngIf="!isLoading && topic">
+    <div class="header-section">
+      <h2 class="glitch" [attr.data-text]="'Moderando: ' + topic.topicName">Moderando: {{ topic.topicName }}</h2>
+    </div>
+
+    <div class="topic-details">
+      <h3>// Detalles de la Temática</h3>
+      <p><strong>ID:</strong> {{ topic.topicId }}</p>
+      <p><strong>Descripción:</strong> {{ topic.topicDescription }}</p>
+      <div *ngIf="topic.backgroundImage" class="image-preview">
+        <p><strong>Imagen de fondo:</strong></p>
+        <img [src]="'http://localhost:8080/uploads/' + topic.backgroundImage" alt="Imagen de fondo">
+      </div>
+    </div>
+
+    <div class="danger-zone">
+      <h3>// Zona de Peligro</h3>
+      <p>Al borrar esta temática, se eliminarán permanentemente todos los posts y comentarios asociados a ella. Esta acción no se puede deshacer.</p>
+      <button (click)="deleteThisTopic()" class="admin-btn btn-delete">Borrar Temática Permanentemente</button>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !topic" class="no-posts">
+    <p>> No se encontró la temática solicitada.</p>
+  </div>
+
+  <div class="footer-actions">
+    <a routerLink="/profile/admin/forum/topics/moderate" class="btn-back">
+      <span>&lt; Volver a la Selección de Temáticas</span>
+    </a>
+  </div>
+</div>
+

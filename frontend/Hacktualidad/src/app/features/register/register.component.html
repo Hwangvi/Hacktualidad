@@ -1,0 +1,136 @@
+<div class="register-container" [ngStyle]="{ 'background-image': 'url(/assets/images/matrixAzul.jpg)' }">
+  <div class="form-wrapper">
+    <h2>// Registro de Nuevo Usuario</h2>
+
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          [(ngModel)]="user.name"
+          required
+          minlength="2"
+          #name="ngModel"
+        />
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+          <div *ngIf="name.errors?.['required']" class="error-msg">Nombre requerido.</div>
+          <div *ngIf="name.errors?.['minlength']" class="error-msg">Mínimo 2 caracteres.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="surname">Apellido</label>
+        <input
+          type="text"
+          id="surname"
+          name="surname"
+          [(ngModel)]="user.surname"
+          required
+          minlength="2"
+          #surname="ngModel"
+        />
+        <div *ngIf="surname.invalid && (surname.dirty || surname.touched)">
+          <div *ngIf="surname.errors?.['required']" class="error-msg">Apellido requerido.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          [(ngModel)]="user.address"
+          required
+          #address="ngModel"
+        />
+        <div *ngIf="address.invalid && (address.dirty || address.touched)">
+          <div *ngIf="address.errors?.['required']" class="error-msg">Dirección requerida.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Teléfono</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          [(ngModel)]="user.phone"
+          pattern="^[0-9]{9}$"
+          placeholder=""
+          #phone="ngModel"
+        />
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+          <div *ngIf="phone.errors?.['pattern']" class="error-msg">Formato inválido (Se requieren 9 dígitos).</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors?.['required']" class="error-msg">Email requerido.</div>
+          <div *ngIf="email.errors?.['pattern']" class="error-msg">Formato de correo incorrecto.</div>
+        </div>
+      </div>
+
+      <div class="form-group file-upload-wrapper">
+        <label for="photo" class="btn-file-upload">// Seleccionar Foto de Perfil</label>
+        <input type="file" id="photo" name="photo" (change)="onFileSelected($event)" />
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Previsualización de imagen" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="user.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.errors?.['required']" class="error-msg">Contraseña requerida.</div>
+          <div *ngIf="password.errors?.['minlength']" class="error-msg">Mínimo 6 caracteres.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="user.confirmPassword"
+          required
+          #confirmPass="ngModel"
+        />
+        <div *ngIf="confirmPass.value !== password.value && confirmPass.dirty" class="error-msg">
+           Las contraseñas no coinciden.
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="!registerForm.form.valid || user.password !== user.confirmPassword">
+        Registrarse
+      </button>
+
+      <div class="login-link">¿Ya tienes una cuenta? <a routerLink="/login">¡Inicia sesión aquí!</a></div>
+    </form>
+  </div>
+</div>

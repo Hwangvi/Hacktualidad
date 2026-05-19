@@ -1,0 +1,53 @@
+<div class="moderation-container">
+  <div class="header-section">
+    <h2 class="glitch" [attr.data-text]="'MODERANDO COMENTARIOS'">MODERANDO COMENTARIOS</h2>
+    <h4 class="sub-header" *ngIf="post">Post: {{ post.title }}</h4>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">Desencriptando comentarios...</div>
+
+  <div *ngIf="!isLoading && comments.length > 0" class="bulk-actions">
+    <button (click)="deleteSelectedComments()" class="admin-btn btn-delete bulk-btn">
+      BORRAR SELECCIONADOS ({{ selectedCommentIds.size }})
+    </button>
+  </div>
+
+  <div *ngIf="!isLoading && comments.length > 0" class="posts-table-wrapper">
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th class="checkbox-col">
+            <input type="checkbox" [checked]="areAllSelected()" (change)="toggleAll($event)">
+          </th>
+          <th>ID</th>
+          <th>Autor</th>
+          <th>Contenido</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments" [class.selected-row]="isSelected(comment.commentId)">
+          <td class="checkbox-col">
+            <input type="checkbox"
+                   [checked]="isSelected(comment.commentId)"
+                   (change)="toggleSelection(comment.commentId, $event)">
+          </td>
+          <td>{{ comment.commentId }}</td>
+          <td>{{ comment.author?.name || 'Anon' }}</td>
+          <td class="content-cell" [title]="comment.content">{{ comment.content }}</td>
+          <td>{{ comment.commentDate | date:'dd/MM/yy HH:mm' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!isLoading && comments.length === 0" class="no-posts">
+    <p>> No se detectaron comentarios en este hilo.</p>
+  </div>
+
+  <div class="footer-actions">
+    <button (click)="goBack()" class="btn-back">
+      <span>&lt; Volver a Hilos</span>
+    </button>
+  </div>
+</div>

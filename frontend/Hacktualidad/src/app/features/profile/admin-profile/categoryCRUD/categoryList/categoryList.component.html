@@ -1,0 +1,28 @@
+<div class="list-container">
+  <div class="header-card">
+    <h1 class="glitch" data-text="ADMINISTRAR CATEGORÍAS">ADMINISTRAR CATEGORÍAS</h1>
+  </div>
+  <div *ngIf="(categories$ | async) as categories; else noData">
+    <div class="list-vertical" *ngIf="categories.length > 0; else noData">
+      <div *ngFor="let category of categories" class="admin-card">
+        <div class="card-color-tag" [ngClass]="category.name | categoryColor"></div>
+        <div class="card-content">
+          <div class="info">
+            <h3 class="name">{{ category.name }}</h3>
+            <p class="description">{{ category.description }}</p>
+          </div>
+          <div class="actions">
+            <a [routerLink]="['/profile/admin/categories/edit', category.categoryId]" class="btn-action btn-edit">Editar</a>
+            <button (click)="onDeleteCategory(category.categoryId)" class="btn-action btn-delete">Borrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-card">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Volver al Panel</button>
+  </div>
+  <ng-template #noData>
+    <div class="no-data-message"><p>No se encontraron categorías.</p></div>
+  </ng-template>
+</div>

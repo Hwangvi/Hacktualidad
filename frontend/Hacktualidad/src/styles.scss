@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');
+
+html {
+  overflow-y: scroll;
+}
+
+body.swal2-shown {
+  padding-right: 0px !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #000000;
+  font-family: 'Share Tech Mono', monospace;
+
+  color: #e0e0e0;
+}
+
+header {
+  background-color: #4292e1;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  background-color: #4292e1;
+  padding: 10px 20px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.pointer {
+  cursor: pointer;
+}
+
+@font-face {
+  font-family: 'BadSignal';
+  src: url('./app/assets/fonts/BadSignal.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.hacker-popup {
+  background-color: #0a0a0a !important;
+  border: 1px solid #00ff00 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4) !important;
+}
+
+.hacker-popup .swal2-title {
+  color: #00ff00 !important;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.hacker-popup .swal2-html-container {
+  color: #aaffaa !important;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.hacker-popup .swal2-icon.swal2-success .swal2-success-line-tip,
+.hacker-popup .swal2-icon.swal2-success .swal2-success-line-long {
+  background-color: #00ff00 !important;
+}
+
+.hacker-popup .swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(0, 255, 0, 0.3) !important;
+}
+
+.hacker-popup .hacker-confirm-button {
+  background-color: transparent !important;
+  border: 2px solid #00ff00 !important;
+  color: #00ff00 !important;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.hacker-popup .hacker-confirm-button:hover {
+  background-color: #00ff00 !important;
+  color: #0a0a0a !important;
+}
+
+.hacker-popup .swal2-timer-progress-bar {
+  background: #00ff00 !important;
+}
+
+.hacker-popup .hacker-error-button {
+  background-color: transparent !important;
+  border: 2px solid #ff3333 !important;
+  color: #ff3333 !important;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.hacker-popup .hacker-error-button:hover {
+  background-color: #ff3333 !important;
+  color: #0a0a0a !important;
+}
+
+.hacker-popup .swal2-icon.swal2-error {
+  border-color: #ff3333 !important;
+}
+.hacker-popup .swal2-icon.swal2-error .swal2-x-mark-line-left,
+.hacker-popup .swal2-icon.swal2-error .swal2-x-mark-line-right {
+  background-color: #ff3333 !important;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.swal2-popup {
+  border: 1px solid #00ffcc !important;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+.swal2-title {
+  font-family: 'Courier New', monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+.swal2-html-container {
+  font-family: 'Courier New', monospace !important;
+  color: #e0e0e0 !important;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+  border-radius: 0 !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+}
+
+.swal2-confirm:focus,
+.swal2-cancel:focus {
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.3) !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1d6fa5;
+}

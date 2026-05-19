@@ -1,0 +1,59 @@
+<div class="edit-profile-container">
+  <div *ngIf="editableProduct" class="edit-form-card">
+    <h1 class="glitch" data-text="MODIFICAR PRODUCTO">MODIFICAR PRODUCTO</h1>
+    <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="name">// Nombre del Producto </label>
+        <input type="text" id="name" name="name" [(ngModel)]="editableProduct.name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">// Descripción</label>
+        <textarea id="description" name="description" [(ngModel)]="editableProduct.description" required rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price">// Precio (€)</label>
+        <input type="number" id="price" name="price" [(ngModel)]="editableProduct.price" required step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="stock">// Stock</label>
+        <input type="number" id="stock" name="stock" [(ngModel)]="editableProduct.stock" required>
+      </div>
+
+      <div class="form-group">
+        <label for="category">// Categoría</label>
+        <select id="category" name="category" [(ngModel)]="editableProduct.category" required [compareWith]="compareCategories">
+          <option [ngValue]="null" disabled>-- Selecciona una categoría --</option>
+          <option *ngFor="let cat of categories" [ngValue]="cat">
+            {{ cat.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>// Estado del Producto</label>
+        <div class="toggle-switch">
+          <input type="checkbox" id="active" name="active" [(ngModel)]="editableProduct.active">
+          <label for="active" class="slider"></label>
+          <span class="toggle-label">{{ editableProduct.active ? 'Activo (Visible en tienda)' : 'Inactivo (Oculto)' }}</span>
+        </div>
+      </div>
+      <div class="form-group file-upload-wrapper">
+        <label for="photo" class="btn-file-upload">// Cambiar Foto</label>
+        <input type="file" id="photo" name="photo" (change)="onFileSelected($event)">
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Previsualización">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="btn-save" [disabled]="!productForm.valid">Guardar Cambios</button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+</div>

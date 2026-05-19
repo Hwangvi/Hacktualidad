@@ -1,0 +1,30 @@
+<div class="moderation-container">
+  <h2 class="glitch" [attr.data-text]="title">{{ title }}</h2>
+  <p class="subtitle">{{ subtitle }}</p>
+  <div *ngIf="isLoading" class="loading-state">Cargando temáticas...</div>
+
+  <div *ngIf="!isLoading && topics.length > 0" class="topic-list">
+    <ng-container *ngFor="let topic of topics">
+      <a
+        *ngIf="moderationMode === 'topics'"
+        [routerLink]="['/profile/admin/forum/topics/moderate', topic.topicId]"
+        class="topic-item"
+      >
+        <h3>{{ topic.topicName }}</h3>
+        <p>{{ topic.topicDescription }}</p>
+      </a>
+      <a
+        *ngIf="moderationMode === 'posts'"
+        [routerLink]="['/profile/admin/forum/moderate', topic.topicName]"
+        class="topic-item"
+      >
+        <h3>{{ topic.topicName }}</h3>
+        <p>{{ topic.topicDescription }}</p>
+      </a>
+    </ng-container>
+  </div>
+
+  <div class="footer-card">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Volver al Panel</button>
+  </div>
+</div>

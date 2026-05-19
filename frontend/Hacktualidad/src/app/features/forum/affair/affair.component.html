@@ -1,0 +1,16 @@
+<div class="tematica-container">
+  <h1>Elige una temática y sumérgete en busca de información</h1>
+
+  <div class="grid-container">
+    <a
+      *ngFor="let topic of topics"
+      [routerLink]="['/forum', topic.topicName]"
+      class="grid-item"
+      [style.background-image]="'url(http://localhost:8080/uploads/' + topic.backgroundImage + ')'"
+    >
+      <div class="grid-item-overlay">
+        <span class="grid-text">{{ topic.topicName | uppercase }}</span>
+      </div>
+    </a>
+  </div>
+</div>

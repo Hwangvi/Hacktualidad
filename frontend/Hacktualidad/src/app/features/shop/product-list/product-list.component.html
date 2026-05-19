@@ -1,0 +1,76 @@
+<div class="search-container">
+    <div class="search-wrapper">
+         <div class="input-group">
+          <span class="input-label">BUSQUEDA POR OBJETO:</span>
+          <input
+            type="text"
+            class="cyber-input"
+            placeholder="Nombre del producto..."
+            [(ngModel)]="searchTerm"
+            (input)="applyFilter()">
+        </div>
+
+        <div class="input-group">
+          <span class="input-label">FILTRO POR CATEGORIA:</span>
+          <select
+            class="cyber-select"
+            [(ngModel)]="selectedCategoryId"
+            (change)="applyFilter()">
+            <option value="">[ TODAS LA CATEGORIAS ]</option>
+            <option *ngFor="let cat of categories" [value]="cat.categoryId">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+    </div>
+</div>
+
+<div class="product-grid">
+  <div *ngIf="paginatedProducts.length === 0" class="no-results">
+    NO SE HAN ENCONTRADO PRODUCTOS
+  </div>
+
+  <a class="product-card"
+     *ngFor="let product of paginatedProducts; let i = index"
+     [routerLink]="['/shop', product.productId]"
+     [style.--i]="i">
+
+     <div class="card-media">
+        <img [src]="'http://localhost:8080/uploads/' + product.photo" alt="{{ product.name }}" class="product-image">
+      </div>
+
+      <div class="card-content">
+        <span class="category-tag" *ngIf="product.category" [ngClass]="product.category.name | categoryColor">{{product.category.name}}</span>
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price | currency:'EUR' }}</p>
+      </div>
+  </a>
+</div>
+
+<div class="pagination-container" *ngIf="totalPages > 1">
+
+  <button
+    class="page-btn prev"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)">
+    &lt; ANTERIOR
+  </button>
+
+  <div class="pages-list">
+    <button
+      *ngFor="let page of pagesArray"
+      class="page-number"
+      [class.active]="page === currentPage"
+      (click)="changePage(page)">
+      {{ page }}
+    </button>
+  </div>
+
+  <button
+    class="page-btn next"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)">
+    SIGUIENTE &gt;
+  </button>
+
+</div>

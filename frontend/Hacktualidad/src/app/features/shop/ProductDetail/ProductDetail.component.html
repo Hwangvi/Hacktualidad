@@ -1,0 +1,43 @@
+<div class="detail-container" *ngIf="product; else loadingTempl">
+  <div class="detail-card">
+    <div class="image-section">
+      <div class="glitch-wrapper">
+        <img [src]="'http://localhost:8080/uploads/' + product.photo" [alt]="product.name" class="product-img">
+      </div>
+    </div>
+
+    <div class="info-section">
+      <span class="category-badge">{{ product.category.name }}</span>
+      <h1 class="title">{{ product.name }}</h1>
+      <div class="divider"></div>
+
+      <p class="description">{{ product.description }}</p>
+
+      <div class="meta-data">
+        <div class="price-tag">{{ product.price | currency:'EUR' }}</div>
+        <div class="stock-status" [ngClass]="{'in-stock': product.stock > 0, 'out-stock': product.stock === 0}">
+          PRODUCTOS DISPONIBLES: {{ product.stock > 0 ? '(' + product.stock + ')' : 'AGOTADO' }}
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-hack" (click)="addToCart()" [disabled]="product.stock === 0">
+          <span class="btn-text">AÑADIR AL CARRITO</span>
+          <span class="btn-glitch"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="back-nav">
+    <a routerLink="/shop" class="btn-back">
+      <span class="icon">&lt;&lt;</span> VOLVER A LA TIENDA </a>
+  </div>
+</div>
+
+
+
+<ng-template #loadingTempl>
+  <div class="loading-screen">
+    <p>DESCIFRANDO DATOS...</p>
+  </div>
+</ng-template>

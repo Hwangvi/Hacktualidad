@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Funcionalidades - Hacktualidad</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-main: #2d3748;
+            --text-secondary: #718096;
+            --card-bg: #ffffff;
+            --accent-color: #6366f1;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            background: -webkit-linear-gradient(45deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card.blue { border-top-color: #3b82f6; }
+        .card.green { border-top-color: #10b981; }
+        .card.purple { border-top-color: #8b5cf6; }
+        .card.orange { border-top-color: #f59e0b; }
+        .card.red { border-top-color: #ef4444; }
+
+        .icon-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .blue .icon-box { background: #eff6ff; color: #3b82f6; }
+        .green .icon-box { background: #ecfdf5; color: #10b981; }
+        .purple .icon-box { background: #f5f3ff; color: #8b5cf6; }
+        .orange .icon-box { background: #fffbeb; color: #f59e0b; }
+        .red .icon-box { background: #fef2f2; color: #ef4444; }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: start;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        li i {
+            margin-top: 5px;
+            margin-right: 12px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+            header h1 { -webkit-text-fill-color: black; color: black; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Manual de Usuario: Hacktualidad</h1>
+            <p>Un manual de usuario sencillo, simple y visual que te permitirá utilizar la aplicación de una manera rápida</p>
+        </header>
+
+        <div class="grid-layout">
+
+            <div class="card blue">
+                <div class="icon-header">
+                    <div class="icon-box"><i class="fa-solid fa-user-astronaut"></i></div>
+                    <h2>Registro de usuario</h2>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-chevron-right"></i> Simplemente necesitas tu correo electrónico y contraseña para acceder.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> En caso de que poseas una cuenta: pulsa el link de ¿Aún no te has registrado? ¡Haz click aquí!.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Simplemente rellena tus datos y tus credenciales de acceso.</li>
+                </ul>
+            </div>
+
+            <div class="card purple">
+                <div class="icon-header">
+                    <div class="icon-box"><i class="fa-solid fa-store"></i></div>
+                    <h2>Tienda</h2>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-chevron-right"></i> Puedes buscar productos a través del buscador o filtrarlos por categorias.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Pulsar en un determinado producto te mostrará los detalles del prducto en cuestión.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Se mostrará el nombre, precio, descripción y la posibilidad de añadirlo al carrito</li>
+                </ul>
+            </div>
+
+            <div class="card orange">
+                <div class="icon-header">
+                    <div class="icon-box"><i class="fa-solid fa-comments"></i></div>
+                    <h2>Foro</h2>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-chevron-right"></i> Puedes seleccionar un Topic.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Puedes consultar la lista de posts, incluso crearlos.</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Tambien puedes añadir comentarios a los posts, visibles para todos los demas usuarios.</li>
+                </ul>
+            </div>
+
+            <div class="card green">
+                <div class="icon-header">
+                    <div class="icon-box"><i class="fa-solid fa-address-card"></i></div>
+                    <h2>Mi Perfil</h2>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-chevron-right"></i> Puedes consultar tus datos personales (Con los que te inscribiste en la aplicación).</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Como no podría ser de otras manera puedes modificar tus datos personales</li>
+                </ul>
+            </div>
+
+            <div class="card red">
+                <div class="icon-header">
+                    <div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <h2>Carrito de la compra</h2>
+                </div>
+                <ul>
+                    <li><i class="fa-solid fa-chevron-right"></i> Se mostrará una lista de productos si los añadiste al carrito desde la tienda, si no, se mostrará un mensaje de carrito vacio</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Puedes comprar los productos, al hacerlos se procesará tu pedido y se te enviará un correo con los datos del pedido al correo con el que te registraste</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; color: #a0aec0; font-size: 0.9rem;">
+            <p>Aplicación v1.0 | Desarrollada con Angular & Spring Boot</p>
+        </div>
+    </div>
+
+</body>
+</html>

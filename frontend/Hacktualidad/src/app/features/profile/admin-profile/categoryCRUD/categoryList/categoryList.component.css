@@ -1,0 +1,181 @@
+:host {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ff00;
+}
+
+.list-container {
+  max-width: 900px;
+  margin: 7rem auto;
+  padding: 20px;
+}
+
+.header-card {
+  background-color: rgba(10, 25, 10, 0.3);
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  padding: 20px 40px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  text-align: center;
+}
+
+.glitch {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.list-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.admin-card {
+  display: flex;
+  align-items: stretch;
+  background-color: rgba(15, 35, 15, 0.5);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.admin-card:hover {
+  background-color: rgba(25, 55, 25, 0.7);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.card-color-tag {
+  width: 10px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.admin-card:hover .card-color-tag {
+  width: 12px;
+}
+
+.card-content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.footer-card {
+  margin-top: 2rem;
+}
+
+.header-card,
+.footer-card {
+  background-color: rgba(10, 25, 10, 0.3);
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  padding: 20px 40px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  text-align: center;
+}
+
+.btn-cancel {
+  background: none;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel:hover {
+  background-color: #00ff00;
+  color: #000;
+}
+.name {
+  font-size: 1.4em;
+  color: #aaffaa;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 0.9em;
+  color: #e0e0e0;
+  opacity: 0.8;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.btn-action {
+  padding: 8px 16px;
+  border: 2px solid;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  background-color: #0a0a0a;
+}
+
+.btn-edit {
+  border-color: #ffaa00;
+  color: #ffaa00;
+}
+.btn-edit:hover {
+  background-color: #ffaa00;
+  color: #0a0a0a;
+}
+
+.btn-delete {
+  border-color: #ff3333;
+  color: #ff3333;
+}
+.btn-delete:hover {
+  background-color: #ff3333;
+  color: #0a0a0a;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: rgba(0, 255, 0, 0.6);
+  border: 1px dashed rgba(0, 255, 0, 0.3);
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.color-red {
+  background-color: #ff3333;
+  box-shadow: 0 0 15px -5px #ff3333;
+}
+.color-blue {
+  background-color: #3377ff;
+  box-shadow: 0 0 15px -5px #3377ff;
+}
+.color-purple {
+  background-color: #9d33ff;
+  box-shadow: 0 0 15px -5px #9d33ff;
+}
+.color-yellow {
+  background-color: #ffaa00;
+  box-shadow: 0 0 15px -5px #ffaa00;
+}
+.color-default {
+  background-color: #00ff00;
+  box-shadow: 0 0 15px -5px #00ff00;
+}

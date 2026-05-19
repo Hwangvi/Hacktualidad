@@ -1,0 +1,194 @@
+:host {
+  display: block;
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.post-list-container {
+  width: 90%;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.list-header {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
+  padding-bottom: 20px;
+}
+
+.list-header h1 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-primary);
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px #fff, 0 0 15px var(--hacker-green);
+  animation: flicker 1.5s infinite alternate;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-back,
+.create-post-btn {
+  display: inline-block;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.btn-back span,
+.create-post-btn span {
+  display: block;
+  padding: 10px 25px;
+  background-color: var(--hacker-bg, #0a110a);
+  border-radius: 6px;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-back {
+  background-color: #0a0;
+  font-family: inherit;
+}
+
+.btn-back span {
+  color: #fff;
+}
+
+.btn-back:hover {
+  box-shadow: 0 0 25px var(--hacker-glow-color);
+}
+
+.btn-back:hover span {
+  color: var(--hacker-bg, #0a110a);
+  background-color: transparent;
+}
+
+.create-post-btn {
+  background: linear-gradient(45deg, #0f0, #0a0);
+  color: #fff;
+}
+
+.create-post-btn span {
+  color: var(--hacker-green);
+}
+
+.create-post-btn:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
+}
+
+.create-post-btn:hover span {
+  color: var(--hacker-bg, #0a110a);
+  background-color: transparent;
+}
+
+.loading,
+.no-posts {
+  border: 1px dashed var(--hacker-border-color);
+  padding: 40px;
+  margin-top: 20px;
+  text-align: center;
+  font-family: var(--font-code);
+  font-size: 1.1rem;
+  color: var(--hacker-text-dim);
+}
+
+.posts-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.post-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(10, 25, 10, 0.7);
+  border: 1px solid var(--hacker-border-color);
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.post-item:hover {
+  background-color: rgba(0, 255, 65, 0.15);
+  border-color: var(--hacker-green);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px var(--hacker-glow-color);
+}
+
+.post-author-info {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.author-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--hacker-green);
+  object-fit: cover;
+}
+
+.author-name {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  font-family: var(--font-code);
+  color: var(--hacker-text-dim);
+}
+
+.post-details {
+  flex-grow: 1;
+}
+
+.post-title {
+  margin: 0 0 5px 0;
+  font-size: 1.3rem;
+  color: var(--hacker-green);
+  font-family: var(--font-primary);
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: var(--hacker-text-dim);
+  opacity: 0.7;
+  font-family: var(--font-code);
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #0f0, 0 0 11px #0f0;
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}

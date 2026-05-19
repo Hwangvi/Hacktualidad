@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+.panel-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  min-height: 85vh;
+  background-color: #050505;
+}
+
+.admin-management-panel {
+  margin-top: 10%;
+  width: 100%;
+  max-width: 900px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
+  backdrop-filter: blur(5px);
+  color: #0f0;
+  font-family: 'Fira Code', monospace;
+}
+
+.header-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.flicker-text {
+  margin-bottom: 10px;
+  color: #0f0;
+  font-weight: 600;
+  font-size: 2.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+  animation: flicker 1.5s infinite alternate;
+}
+
+.separator {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 255, 0, 0),
+    rgba(0, 255, 0, 0.75),
+    rgba(0, 255, 0, 0)
+  );
+  margin: 30px 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.cyber-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.cyber-table th {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px solid #0f0;
+  color: #0f0;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.cyber-table td {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px dashed rgba(0, 255, 0, 0.3);
+  vertical-align: middle;
+  color: #aaffaa;
+}
+
+.cyber-table tr:hover td {
+  background-color: rgba(0, 255, 0, 0.05);
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 1px solid #0f0;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.prod-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+.admin-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.admin-btn:hover {
+  background-color: #0f0;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+}
+
+.btn-delete {
+  border-color: #ff3333;
+  color: #ff3333;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-delete:hover {
+  background-color: #ff3333;
+  color: #000;
+  box-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
+}
+
+.btn-create {
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+.management-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.management-section h3 {
+  color: #0f0;
+  font-size: 1.4em;
+  margin: 0;
+  font-weight: 600;
+}
+
+.total-glow {
+  color: #fff;
+  text-shadow: 0 0 10px #0f0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(0, 255, 0, 0.7);
+  font-family: 'Fira Code', monospace;
+}
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #0f0, 0 0 11px #0f0, 0 0 19px #0f0, 0 0 40px #0a0, 0 0 80px #0a0;
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .panel-container {
+    padding: 80px 10px 20px 10px;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .admin-management-panel {
+    padding: 15px;
+  }
+
+  .flicker-text {
+    font-size: 1.8rem;
+  }
+  .cyber-table thead {
+    display: none;
+  }
+
+  .cyber-table,
+  .cyber-table tbody,
+  .cyber-table tr,
+  .cyber-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cyber-table tr {
+    margin-bottom: 20px;
+    background: rgba(0, 20, 0, 0.3);
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+  }
+
+  .cyber-table td {
+    text-align: center;
+    padding: 10px 5px;
+    border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cyber-table td:last-child {
+    border-bottom: none;
+    padding-top: 15px;
+  }
+
+  .product-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .thumb {
+    width: 80px;
+    height: 80px;
+  }
+
+  .prod-name {
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .text-right {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #00ff00;
+  }
+
+  .btn-delete {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .management-section {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    border-top: 2px solid #00ff00;
+    padding-top: 20px;
+  }
+
+  .management-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .management-actions {
+    width: 100%;
+  }
+
+  .btn-create {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,37 @@
+<div class="list-container">
+  <div class="header-card">
+    <h1 class="glitch" data-text="ADMINISTRAR USUARIOS">ADMINISTRAR USUARIOS</h1>
+  </div>
+  <div *ngIf="(users$ | async) as users; else noUsers">
+    <div class="user-list-vertical" *ngIf="users.length > 0; else noUsers">
+      <div *ngFor="let user of users" class="user-admin-card">
+
+        <div class="card-media">
+          <img [src]="user.photo ? 'http://localhost:8080/uploads/' + user.photo : '/assets/images/default-user.png'" [alt]="user.name" class="user-image">
+        </div>
+
+        <div class="card-content">
+          <div class="user-info">
+            <h3 class="user-name">{{ user.name }} {{ user.surname }}</h3>
+            <p class="user-details">{{ user.email }} - ROL: {{ user.role }}</p>
+          </div>
+
+          <div class="user-actions">
+            <a [routerLink]="['/profile/admin/users/edit', user.userId]" class="btn-action btn-edit">Editar</a>
+            <button (click)="onDeleteUser(user.userId)" class="btn-action btn-delete">Borrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noUsers>
+    <div class="no-data-message">
+      <p>No se encontraron usuarios para mostrar.</p>
+    </div>
+  </ng-template>
+
+  <div class="footer-card">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Volver al Panel</button>
+  </div>
+</div>

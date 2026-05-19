@@ -1,0 +1,50 @@
+<div class="profile-container">
+  <div *ngIf="userData" class="profile-hacker-card">
+    <div class="profile-header">
+      <div class="profile-picture-wrapper">
+        <img *ngIf="userData.photo"
+             [src]="'http://localhost:8080/uploads/' + userData.photo"
+             alt="Foto de perfil de {{ userData.name }}">
+        <img *ngIf="!userData.photo"
+             src="/assets/images/default-avatar.png"
+             alt="Avatar por defecto">
+      </div>
+      <h1 class="glitch" data-text="PERFIL DE ADMINISTRADOR">PERFIL DE ADMINISTRADOR</h1>
+    </div>
+
+    <div class="profile-info">
+      <div class="info-row">
+        <span class="label">// NOMBRE:</span>
+        <span class="value">{{ userData.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">// APELLIDO:</span>
+        <span class="value">{{ userData.surname }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">// DIRECCIÓN:</span>
+        <span class="value">{{ userData.address }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">// EMAIL DE CONFIRMACIÓN:</span>
+        <span class="value">{{ userData.email }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">// NÚMERO DE TELÉFONO:</span>
+        <span class="value">{{ userData.phone }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">// NIVEL DE ACCESO:</span>
+        <span class="value">{{ userData.role }}</span>
+      </div>
+    </div>
+    <hr class="separator">
+    <button class="btn-modify" (click)="onModifyData()">
+      Modificar Mis Datos
+    </button>
+  </div>
+  <div *ngIf="!userData" class="loading-message">
+    <p>Cargando datos del perfil...</p>
+  </div>
+</div>
+<app-admin-panel></app-admin-panel>

@@ -1,0 +1,198 @@
+.panel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.admin-management-panel {
+  width: 100%;
+  max-width: 700px;
+  background-color: rgba(10, 25, 10, 0.3);
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.management-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
+}
+
+.management-section:last-child {
+  border-bottom: none;
+}
+
+.management-section h3 {
+  color: #aaffaa;
+  opacity: 0.8;
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.management-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-btn {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  font-family: inherit;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.admin-btn:hover {
+  color: #0a0a0a;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
+}
+
+.admin-btn:disabled {
+  border-color: #555;
+  color: #555;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.admin-btn:disabled:hover {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.separator {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 255, 0, 0),
+    rgba(0, 255, 0, 0.75),
+    rgba(0, 255, 0, 0)
+  );
+  margin: 30px 0;
+}
+
+.glitch {
+  font-size: 2.5rem;
+  text-align: center;
+  position: relative;
+  text-transform: uppercase;
+  color: #00ff00;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 25, 10, 0.3);
+  overflow: hidden;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 red;
+  animation: glitch-anim-1 2s linear infinite reverse;
+}
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  animation: glitch-anim-2 2s linear infinite reverse;
+}
+.btn-create:hover {
+  background-color: #00aaff;
+  border-color: #00aaff;
+}
+.btn-edit:hover {
+  background-color: #ffaa00;
+  border-color: #ffaa00;
+}
+.btn-delete:hover {
+  background-color: #ff0055;
+  border-color: #ff0055;
+}
+
+@media (max-width: 768px) {
+
+  .panel-container {
+    padding: 20px 10px;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .admin-management-panel {
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 80px;
+  }
+
+  .management-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .management-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .management-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .admin-btn {
+    width: 90%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .glitch {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+  }
+
+  .separator {
+    margin: 20px 0;
+  }
+}
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+  }
+  5% {
+    clip: rect(12px, 9999px, 60px, 0);
+  }
+  100% {
+    clip: rect(50px, 9999px, 95px, 0);
+  }
+}
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+  }
+  100% {
+    clip: rect(20px, 9999px, 85px, 0);
+  }
+}

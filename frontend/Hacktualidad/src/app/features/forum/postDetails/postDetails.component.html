@@ -1,0 +1,85 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Cargando transmisión...</p>
+  </div>
+
+  <div *ngIf="error" class="error-state">
+    <p>ERROR DE CONEXIÓN</p>
+    <p class="error-details">{{ error }}</p>
+  </div>
+
+  <div *ngIf="post && !isLoading" class="post-wrapper">
+    <article class="post-content">
+      <header class="post-header">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="author-section">
+          <img
+            [src]="'http://localhost:8080/uploads/' + post.author.photo"
+            [alt]="post.author.name"
+            class="author-photo"
+          />
+          <div class="author-details">
+            <span class="author-name">{{ post.author.name }}</span>
+            <span class="post-date">{{
+              post.publicationDate | date : 'short'
+            }}</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="post-body">
+        <p>{{ post.content }}</p>
+      </div>
+    </article>
+
+    <hr class="separator" />
+
+    <section class="comments-section">
+      <h2>// Hilo de Respuestas ({{ post.comments.length }})</h2>
+
+      <form (ngSubmit)="addComment()" class="comment-form">
+        <div class="form-group">
+          <label for="newComment">Añadir respuesta:</label>
+          <textarea
+            id="newComment"
+            [(ngModel)]="newCommentContent"
+            name="newComment"
+            placeholder="Escribe tu comentario..."
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" [disabled]="!newCommentContent.trim()">Transmitir</button>
+        </div>
+      </form>
+
+      <div *ngIf="post.comments.length > 0; else noComments" class="comments-list">
+        <div *ngFor="let comment of post.comments" class="comment-item">
+          <img
+            [src]="'http://localhost:8080/uploads/' + comment.author.photo"
+            [alt]="comment.author.name"
+            class="author-photo small"
+          />
+          <div class="comment-body">
+            <div class="comment-author-info">
+              <strong>{{ comment.author.name }}</strong>
+              <span class="comment-date">{{ comment.commentDate | date : 'short' }}</span>
+            </div>
+            <p class="comment-text">{{ comment.content }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noComments>
+        <p class="no-comments-message">> El canal está limpio. Sé el primero en responder.</p>
+      </ng-template>
+    </section>
+
+    <div class="page-actions">
+      <a [routerLink]="post.topicName ? ['/forum', post.topicName] : ['/forum']" class="btn-back">
+        <span>&lt; Volver a la lista de posts</span>
+      </a>
+    </div>
+  </div>
+</div>

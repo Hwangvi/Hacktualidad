@@ -1,0 +1,311 @@
+:host {
+  --primary-color: #00ffcc;
+  --background-color: #1a1a1a;
+  --card-background: #222;
+  --text-color: #e0e0e0;
+  --dark-text: #1a1a1a;
+  --glow-color: rgba(0, 255, 204, 0.7);
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateGradient {
+  from {
+    transform: scale(1.1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.1) rotate(360deg);
+  }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
+  padding: 2.5rem;
+}
+
+.product-card {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  margin-top: 50px;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  animation: none !important;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(
+    from 0deg,
+    var(--primary-color),
+    #ff00ff,
+    #00aaff,
+    var(--primary-color)
+  );
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  transform: scale(1.1) rotate(0deg);
+}
+
+.product-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.product-card:hover::before {
+  opacity: 1;
+  animation: rotateGradient 4s linear infinite;
+}
+
+.card-media {
+  height: 220px;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 1.5rem;
+  background-color: var(--card-background);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-tag {
+  text-align: center;
+  height: 20px;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  color: #0a0a0a;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.color-red {
+  background-color: #ff3333;
+}
+.color-blue {
+  background-color: #3377ff;
+}
+.color-purple {
+  background-color: #9d33ff;
+}
+.color-yellow {
+  background-color: #fffb00;
+}
+.color-orange {
+  background-color: #ff7904;
+}
+.color-default {
+  background-color: #00ff00;
+  border-color: rgba(10, 10, 10, 0.4);
+}
+
+.product-card:hover .category-tag {
+  background-color: var(--text-color);
+  color: var(--dark-text);
+}
+
+.product-name {
+  color: var(--primary-color);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+  text-shadow: 0 0 5px var(--glow-color);
+}
+
+.product-price {
+  color: var(--text-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: right;
+  margin-top: auto;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+  margin-top: 30px;
+}
+
+.search-wrapper {
+  margin-top: 130px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: var(--card-background);
+  padding: 1.5rem 3rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+}
+
+.search-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+}
+
+.input-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.cyber-input,
+.cyber-select {
+  background-color: #0a0a0a;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 0.8rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.cyber-input::placeholder {
+  color: #555;
+}
+
+.cyber-input:focus,
+.cyber-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+}
+
+.cyber-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300ffcc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 0.7em top 50%;
+  background-size: 0.65em auto;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #ff3333;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  border: 1px dashed #333;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 3rem 0;
+  padding-bottom: 2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.page-btn,
+.page-number {
+  background-color: var(--bg-black);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: #000;
+  box-shadow: 0 0 15px var(--primary-color);
+}
+
+.page-btn:disabled {
+  border-color: #444;
+  color: #444;
+  cursor: not-allowed;
+}
+
+.pages-list {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-number {
+  min-width: 40px;
+}
+
+.page-number:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.page-number.active {
+  background-color: var(--primary-color);
+  color: #000;
+  box-shadow: 0 0 10px var(--primary-color);
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
