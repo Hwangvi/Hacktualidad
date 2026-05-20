@@ -2,6 +2,7 @@ package com.Hacktualidad.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -12,11 +13,15 @@ public class CloudinaryStorageService {
 
     private final Cloudinary cloudinary;
 
-    public CloudinaryStorageService() {
+    public CloudinaryStorageService(
+            @Value("${cloudinary.cloud-name}") String cloudName,
+            @Value("${cloudinary.api-key}") String apiKey,
+            @Value("${cloudinary.api-secret}") String apiSecret) {
+
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dqkv5bmt1",
-                "api_key", "311116265369515",
-                "api_secret", "Kjmlt58WeO3x-He-mUi4jZt1IJ0"
+                "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", apiSecret
         ));
     }
 
@@ -27,10 +32,8 @@ public class CloudinaryStorageService {
 
         try {
             String publicId = extractPublicId(photoUrl);
-
             cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
             System.out.println(">>> Imagen eliminada de Cloudinary con éxito: " + publicId);
-
         } catch (IOException e) {
             System.err.println("Error al intentar borrar el archivo de Cloudinary: " + e.getMessage());
         }
@@ -45,6 +48,7 @@ public class CloudinaryStorageService {
         }
         return photoUrl;
     }
+
     public String storeFile(MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -52,7 +56,6 @@ public class CloudinaryStorageService {
             }
             @SuppressWarnings("rawtypes")
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-
             return uploadResult.get("secure_url").toString();
         } catch (IOException e) {
             throw new RuntimeException("Error al subir el archivo a Cloudinary: " + e.getMessage());
