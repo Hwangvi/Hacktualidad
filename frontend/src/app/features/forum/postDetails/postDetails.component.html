@@ -14,15 +14,13 @@
         <h1 class="post-title">{{ post.title }}</h1>
         <div class="author-section">
           <img
-            [src]="uploadsUrl + post.author.photo"
+            [src]="post.author.photo ? post.author.photo : '/assets/images/default-avatar.png'"
             [alt]="post.author.name"
             class="author-photo"
           />
           <div class="author-details">
             <span class="author-name">{{ post.author.name }}</span>
-            <span class="post-date">{{
-              post.publicationDate | date : 'short'
-            }}</span>
+            <span class="post-date">{{ post.publicationDate | date : 'short' }}</span>
           </div>
         </div>
       </header>
@@ -57,7 +55,7 @@
       <div *ngIf="post.comments.length > 0; else noComments" class="comments-list">
         <div *ngFor="let comment of post.comments" class="comment-item">
           <img
-            [src]="uploadsUrl + comment.author.photo"
+            [src]="comment.author.photo ? comment.author.photo : '/assets/images/default-avatar.png'"
             [alt]="comment.author.name"
             class="author-photo small"
           />
@@ -72,7 +70,7 @@
       </div>
 
       <ng-template #noComments>
-        <p class="no-comments-message">> El canal está limpio. Sé el primero en responder.</p>
+        <p class="no-comments-message">&gt; El canal está limpio. Sé el primero en responder.</p>
       </ng-template>
     </section>
 
