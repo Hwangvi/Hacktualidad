@@ -17,6 +17,8 @@ export class CartComponent implements OnInit {
   cart: Cart | null = null;
   public uploadsUrl = environment.uploadsUrl;
 
+  public failedImageIds = new Set<number>();
+
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
@@ -27,6 +29,10 @@ export class CartComponent implements OnInit {
     this.cartService.getCart().subscribe({
       error: (err) => console.log('Usuario no logueado'),
     });
+  }
+
+  handleImageError(productId: number): void {
+    this.failedImageIds.add(productId);
   }
 
   removeItem(productId: number): void {

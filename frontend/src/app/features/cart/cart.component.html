@@ -28,16 +28,26 @@
             <tr *ngFor="let item of cart.items">
               <td>
                 <div class="product-info">
-                  <img [src]="item.product.photo ? (uploadsUrl + item.product.photo) : 'assets/images/default-product.png'"
-                       (error)="$any($event.target).src = 'assets/images/default-product.png'"
-                       alt="{{ item.product.name }}"
-                       class="thumb" />
+                  <img
+                    *ngIf="item.product.photo && !failedImageIds.has(item.product.productId)"
+                    [src]="uploadsUrl + item.product.photo"
+                    (error)="handleImageError(item.product.productId)"
+                    alt="{{ item.product.name }}"
+                    class="thumb"
+                  />
+
+                  <div
+                    *ngIf="!item.product.photo || failedImageIds.has(item.product.productId)"
+                    class="thumb-fallback"
+                  >
+                    [OBJ]
+                  </div>
 
                   <span class="prod-name">{{ item.product.name }}</span>
                 </div>
               </td>
               <td class="text-center">{{ item.quantity }}</td>
-              <td class="text-right">{{ item.subtotal | currency : 'EUR' }}</td>
+              <td class="text-right">{{ item.subtotal | currency: 'EUR' }}</td>
               <td class="text-center">
                 <button class="admin-btn btn-delete" (click)="removeItem(item.product.productId)">
                   ELIMINAR
@@ -52,7 +62,7 @@
 
       <div class="management-section">
         <h3>
-          PRECIO TOTAL: <span class="total-glow">{{ cart.totalAmount | currency : 'EUR' }}</span>
+          PRECIO TOTAL: <span class="total-glow">{{ cart.totalAmount | currency: 'EUR' }}</span>
         </h3>
         <div class="management-actions">
           <button class="admin-btn btn-create" (click)="buy()">COMPRAR</button>
