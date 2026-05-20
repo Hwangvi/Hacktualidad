@@ -18,11 +18,25 @@ public class CloudinaryStorageService {
             @Value("${cloudinary.api-key}") String apiKey,
             @Value("${cloudinary.api-secret}") String apiSecret) {
 
-        this.cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", cloudName,
-                "api_key", apiKey,
-                "api_secret", apiSecret
-        ));
+
+        System.out.println(">>> [Cloudinary Init] cloudName: " + (cloudName != null ? "OK" : "NULL"));
+        System.out.println(">>> [Cloudinary Init] apiKey: " + (apiKey != null ? "OK" : "NULL"));
+        System.out.println(">>> [Cloudinary Init] apiSecret: " + (apiSecret != null ? "OK" : "NULL"));
+
+        if (cloudName == null || apiKey == null || apiSecret == null) {
+            throw new IllegalArgumentException("ERROR: Las credenciales de Cloudinary no se han cargado correctamente desde las variables de entorno.");
+        }
+
+        try {
+            this.cloudinary = new Cloudinary(ObjectUtils.asMap(
+                    "cloud_name", cloudName.trim(),
+                    "api_key", apiKey.trim(),
+                    "api_secret", apiSecret.trim()
+            ));
+            System.out.println(">>> [Cloudinary Init] ¡Servicio inicializado con éxito!");
+        } catch (Exception e) {
+            throw new RuntimeException("Error crítico al inicializar el objeto Cloudinary: " + e.getMessage(), e);
+        }
     }
 
     public void deleteFile(String photoUrl) {
