@@ -7,7 +7,7 @@
       <div *ngFor="let product of products" class="product-admin-card">
 
         <div class="card-media">
-          <img [src]="product.photo ? (uploadsUrl + product.photo) : 'assets/images/default-product.png'"
+          <img [src]="product.photo ? product.photo : 'assets/images/default-product.png'"
                (error)="$any($event.target).src = 'assets/images/default-product.png'"
                [alt]="product.name"
                class="product-image">

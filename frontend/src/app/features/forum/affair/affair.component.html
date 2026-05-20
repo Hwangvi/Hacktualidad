@@ -6,7 +6,7 @@
       *ngFor="let topic of topics"
       [routerLink]="['/forum', topic.topicName]"
       class="grid-item"
-      [style.background-image]="'url(' + uploadsUrl + topic.backgroundImage + ')'"
+      [style.background-image]="'url(' + topic.backgroundImage + ')'"
     >
       <div class="grid-item-overlay">
         <span class="grid-text">{{ topic.topicName | uppercase }}</span>
