@@ -7,7 +7,7 @@
       <div *ngFor="let user of users" class="user-admin-card">
 
         <div class="card-media">
-          <img [src]="user.photo ? 'http://localhost:8080/uploads/' + user.photo : '/assets/images/default-user.png'" [alt]="user.name" class="user-image">
+          <img [src]="user.photo ? uploadsUrl + user.photo : '/assets/images/default-user.png'" [alt]="user.name" class="user-image">
         </div>
 
         <div class="card-content">

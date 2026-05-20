@@ -6,6 +6,7 @@ import { Product } from '../../../../shared/interfaces/Product';
 import Swal from 'sweetalert2';
 import { Observable, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -16,8 +17,9 @@ import { startWith, switchMap } from 'rxjs/operators';
 export class ProductListComponent implements OnInit {
 
   private refreshTrigger$ = new Subject<void>();
-
   products$!: Observable<Product[]>;
+
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(private productService: ProductService, private router: Router) {}
 

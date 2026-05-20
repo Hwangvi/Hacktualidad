@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../core/service/cart.service';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class CartComponent implements OnInit {
   cart: Cart | null = null;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(private cartService: CartService) {}
 

@@ -18,7 +18,7 @@
     <div *ngFor="let post of posts" class="post-item" [routerLink]="['/posts', post.postId]">
       <div class="post-author-info">
         <img
-          [src]="'http://localhost:8080/uploads/' + post.author.photo"
+          [src]="uploadsUrl + post.author.photo"
           [alt]="post.author.name"
           class="author-photo"
         />

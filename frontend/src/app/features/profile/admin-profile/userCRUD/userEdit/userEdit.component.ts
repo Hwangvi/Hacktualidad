@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../../../core/service/user.service';
 import Swal from 'sweetalert2';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-edit',
@@ -18,6 +19,7 @@ export class UserEditComponent implements OnInit {
   errorMessage: string | null = null;
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private userService: UserService,
@@ -32,9 +34,9 @@ export class UserEditComponent implements OnInit {
         next: (user) => {
           this.editableUser = user;
           if (user.photo) {
-            this.imagePreview = 'http://localhost:8080/uploads/' + user.photo;
+            this.imagePreview = environment.uploadsUrl + user.photo;
           } else {
-            this.imagePreview = '/assets/images/default-user.png'; // Imagen por defecto
+            this.imagePreview = '/assets/images/default-user.png';
           }
         },
         error: (err) => this.errorMessage = 'No se pudo encontrar el usuario.'
@@ -54,7 +56,6 @@ export class UserEditComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.editableUser) return;
-
 
     const userUpdateData = {
       name: this.editableUser.name,

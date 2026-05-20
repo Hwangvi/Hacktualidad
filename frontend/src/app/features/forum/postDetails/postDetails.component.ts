@@ -8,6 +8,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BANNED_WORDS } from '../../../shared/consts';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-post-details',
@@ -20,9 +21,8 @@ export class PostDetailsComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
   newCommentContent: string = '';
-  bannedWords = BANNED_WORDS
-
-
+  bannedWords = BANNED_WORDS;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private route: ActivatedRoute,

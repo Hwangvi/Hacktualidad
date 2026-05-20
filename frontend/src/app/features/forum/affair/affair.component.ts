@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ForumService } from '../../../core/service/forum.service';
 import { Topic } from '../../../shared/interfaces/forum';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tematicas',
@@ -12,6 +13,7 @@ import { Topic } from '../../../shared/interfaces/forum';
 })
 export class TematicasComponent implements OnInit {
   topics: Topic[] = [];
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(private forumService: ForumService) {}
 

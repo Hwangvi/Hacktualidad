@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { ForumService } from '../../../core/service/forum.service';
 import { Post } from '../../../shared/interfaces/forum';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-post-list',
@@ -14,6 +15,7 @@ export class PostListComponent implements OnInit {
   posts: Post[] = [];
   topicName: string | null = null;
   isLoading = true;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private route: ActivatedRoute,

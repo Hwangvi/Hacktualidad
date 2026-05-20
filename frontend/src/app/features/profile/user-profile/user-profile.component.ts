@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { User } from '../../../shared/interfaces/User';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,6 +15,8 @@ import { CommonModule } from '@angular/common';
 export class UserProfileComponent implements OnInit {
 
   userData: User | null = null;
+
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private authService: AuthService,

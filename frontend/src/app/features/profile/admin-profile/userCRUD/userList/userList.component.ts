@@ -6,6 +6,7 @@ import { UserService } from '../../../../../core/service/user.service';
 import Swal from 'sweetalert2';
 import { Observable, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-list',
@@ -17,6 +18,7 @@ import { startWith, switchMap } from 'rxjs/operators';
 export class UserListComponent implements OnInit {
   private refreshTrigger$ = new Subject<void>();
   users$!: Observable<User[]>;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(private userService: UserService, private router: Router) {}
 

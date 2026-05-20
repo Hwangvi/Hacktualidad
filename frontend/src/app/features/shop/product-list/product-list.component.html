@@ -36,7 +36,9 @@
      [style.--i]="i">
 
      <div class="card-media">
-        <img [src]="'http://localhost:8080/uploads/' + product.photo" alt="{{ product.name }}" class="product-image">
+        <img [src]="product.photo && product.photo.startsWith('http') ? product.photo : 'assets/images/default-product.png'"
+             alt="{{ product.name }}"
+             class="product-image">
       </div>
 
       <div class="card-content">

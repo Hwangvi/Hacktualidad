@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/service/auth.service';
 import { UserService } from '../../../core/service/user.service';
 import { User } from '../../../shared/interfaces/User';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class EditProfileComponent implements OnInit {
 
   public selectedFile: File | null = null;
   public imagePreview: string | ArrayBuffer | null = null;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +34,7 @@ export class EditProfileComponent implements OnInit {
     if (currentUser) {
       this.editableUser = { ...currentUser };
       if (this.editableUser.photo) {
-        this.imagePreview = 'http://localhost:8080/uploads/' + this.editableUser.photo;
+        this.imagePreview = environment.uploadsUrl + this.editableUser.photo;
       }
     } else {
       this.router.navigate(['/login']);

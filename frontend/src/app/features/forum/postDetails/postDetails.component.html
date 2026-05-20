@@ -14,7 +14,7 @@
         <h1 class="post-title">{{ post.title }}</h1>
         <div class="author-section">
           <img
-            [src]="'http://localhost:8080/uploads/' + post.author.photo"
+            [src]="uploadsUrl + post.author.photo"
             [alt]="post.author.name"
             class="author-photo"
           />
@@ -57,7 +57,7 @@
       <div *ngIf="post.comments.length > 0; else noComments" class="comments-list">
         <div *ngFor="let comment of post.comments" class="comment-item">
           <img
-            [src]="'http://localhost:8080/uploads/' + comment.author.photo"
+            [src]="uploadsUrl + comment.author.photo"
             [alt]="comment.author.name"
             class="author-photo small"
           />

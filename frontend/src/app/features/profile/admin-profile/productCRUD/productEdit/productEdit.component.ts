@@ -7,6 +7,7 @@ import { ProductService } from '../../../../../core/service/product.service';
 import { Category } from '../../../../../shared/interfaces/Category';
 import { CategoryService } from '../../../../../core/service/Category.service';
 import Swal from 'sweetalert2';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-edit',
@@ -21,6 +22,7 @@ export class ProductEditComponent implements OnInit {
   public categories: Category[] = [];
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private productService: ProductService,
@@ -41,7 +43,7 @@ export class ProductEditComponent implements OnInit {
         next: (product) => {
           this.editableProduct = product;
           if (product.photo) {
-            this.imagePreview = 'http://localhost:8080/uploads/' + product.photo;
+            this.imagePreview = environment.uploadsUrl + product.photo;
           }
         },
         error: (err) => {
@@ -94,33 +96,33 @@ export class ProductEditComponent implements OnInit {
     }
 
     this.productService.updateProduct(this.editableProduct.productId, formData).subscribe({
-    next: () => {
-      Swal.fire({
-        title: '¡SISTEMA ACTUALIZADO!',
-        text: 'Los datos del producto han sido reescritos correctamente.',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-        background: '#141414',
-        color: '#00ffcc',
-        iconColor: '#00ffcc'
-      }).then(() => {
-        this.router.navigate(['/profile/admin/products/list']);
-      });
-    },
-    error: (err) => {
-      console.error('Error al actualizar:', err);
-      Swal.fire({
-        title: 'ERROR CRÍTICO',
-        text: err.status === 400 ? 'Datos corruptos o inválidos.' : 'Fallo en la conexión con el servidor.',
-        icon: 'error',
-        background: '#141414',
-        color: '#ff3333',
-        confirmButtonColor: '#ff3333',
-        iconColor: '#ff3333'
-      });
-    },
-  });;
+      next: () => {
+        Swal.fire({
+          title: '¡SISTEMA ACTUALIZADO!',
+          text: 'Los datos del producto han sido reescritos correctamente.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background: '#141414',
+          color: '#00ffcc',
+          iconColor: '#00ffcc'
+        }).then(() => {
+          this.router.navigate(['/profile/admin/products/list']);
+        });
+      },
+      error: (err) => {
+        console.error('Error al actualizar:', err);
+        Swal.fire({
+          title: 'ERROR CRÍTICO',
+          text: err.status === 400 ? 'Datos corruptos o inválidos.' : 'Fallo en la conexión con el servidor.',
+          icon: 'error',
+          background: '#141414',
+          color: '#ff3333',
+          confirmButtonColor: '#ff3333',
+          iconColor: '#ff3333'
+        });
+      },
+    });
   }
 
   onCancel(): void {

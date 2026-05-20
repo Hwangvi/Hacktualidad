@@ -12,7 +12,7 @@
       <p><strong>Descripción:</strong> {{ topic.topicDescription }}</p>
       <div *ngIf="topic.backgroundImage" class="image-preview">
         <p><strong>Imagen de fondo:</strong></p>
-        <img [src]="'http://localhost:8080/uploads/' + topic.backgroundImage" alt="Imagen de fondo">
+        <img [src]="uploadsUrl + topic.backgroundImage" alt="Imagen de fondo">
       </div>
     </div>
 
@@ -33,4 +33,3 @@
     </a>
   </div>
 </div>
-

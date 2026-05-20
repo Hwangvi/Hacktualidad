@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { ForumService } from '../../../../../core/service/forum.service';
 import { Topic } from '../../../../../shared/interfaces/forum';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-topic-moderation-detail',
@@ -15,6 +16,7 @@ import { Topic } from '../../../../../shared/interfaces/forum';
 export class TopicModerationDetailComponent implements OnInit {
   topic: Topic | null = null;
   isLoading = true;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private route: ActivatedRoute,

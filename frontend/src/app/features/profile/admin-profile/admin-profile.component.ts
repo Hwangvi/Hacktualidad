@@ -5,6 +5,7 @@ import { User } from '../../../shared/interfaces/User';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-profile',
@@ -15,6 +16,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 export class AdminProfileComponent implements OnInit {
 
   userData: User | null = null;
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private authService: AuthService,
