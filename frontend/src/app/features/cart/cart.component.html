@@ -28,19 +28,13 @@
             <tr *ngFor="let item of cart.items">
               <td>
                 <div class="product-info">
-                  <img
-                    *ngIf="item.product.photo && !failedImageIds.has(item.product.productId)"
-                    [src]="uploadsUrl + item.product.photo"
-                    (error)="handleImageError(item.product.productId)"
-                    alt="{{ item.product.name }}"
-                    class="thumb"
-                  />
-
                   <div
-                    *ngIf="!item.product.photo || failedImageIds.has(item.product.productId)"
-                    class="thumb-fallback"
+                    class="cart-thumb"
+                    [style.background-image]="
+                      item.product.photo ? 'url(' + uploadsUrl + item.product.photo + ')' : 'none'
+                    "
                   >
-                    [OBJ]
+                    <span *ngIf="!item.product.photo" class="fallback-text">[OBJ]</span>
                   </div>
 
                   <span class="prod-name">{{ item.product.name }}</span>
