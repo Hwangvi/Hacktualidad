@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ProductService } from '../../../../../core/service/product.service';
 import { CategoryService } from '../../../../../core/service/Category.service';
 import { Category } from '../../../../../shared/interfaces/Category';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-create',
@@ -28,6 +29,8 @@ export class ProductCreateComponent implements OnInit {
   public categories: Category[] = [];
   public selectedFile: File | null = null;
   public imagePreview: string | ArrayBuffer | null = null;
+
+  public uploadsUrl = environment.uploadsUrl;
 
   constructor(
     private productService: ProductService,

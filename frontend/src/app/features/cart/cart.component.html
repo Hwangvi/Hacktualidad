@@ -27,10 +27,6 @@
             <tr *ngFor="let item of cart.items">
               <td>
                 <div class="product-info">
-                  <img
-                    [src]="uploadsUrl + item.product.photo"
-                    class="thumb"
-                  />
                   <span class="prod-name">{{ item.product.name }}</span>
                 </div>
               </td>
