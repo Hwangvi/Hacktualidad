@@ -8,10 +8,11 @@
 
     <div *ngIf="!cart || cart.items.length === 0" class="empty-state">
       <p>> NO SE HAN ENCONTRADO PRODUCTOS EN EL CARRITO.</p>
-      <p>> CARRITO VACIO.</p>
+      <p>> CARRITO VACÍO.</p>
       <br />
       <a routerLink="/shop" class="admin-btn btn-create">[ VOLVER A LA TIENDA ]</a>
     </div>
+
     <div *ngIf="cart && cart.items.length > 0">
       <div class="table-responsive">
         <table class="cyber-table">
@@ -27,6 +28,11 @@
             <tr *ngFor="let item of cart.items">
               <td>
                 <div class="product-info">
+                  <img [src]="item.product.photo ? (uploadsUrl + item.product.photo) : 'assets/images/default-product.png'"
+                       (error)="$any($event.target).src = 'assets/images/default-product.png'"
+                       alt="{{ item.product.name }}"
+                       class="thumb" />
+
                   <span class="prod-name">{{ item.product.name }}</span>
                 </div>
               </td>
