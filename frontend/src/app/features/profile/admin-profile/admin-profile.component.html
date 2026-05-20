@@ -3,7 +3,7 @@
     <div class="profile-header">
       <div class="profile-picture-wrapper">
         <img *ngIf="userData.photo"
-             [src]="uploadsUrl + userData.photo"
+             [src]="userData.photo"
              alt="Foto de perfil de {{ userData.name }}">
         <img *ngIf="!userData.photo"
              src="/assets/images/default-avatar.png"
