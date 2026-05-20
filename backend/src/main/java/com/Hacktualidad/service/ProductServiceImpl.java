@@ -8,21 +8,14 @@ import com.Hacktualidad.mapper.ProductMapper;
 import com.Hacktualidad.repository.CategoryRepository;
 import com.Hacktualidad.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.dao.DataIntegrityViolationException;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -36,11 +29,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CloudinaryStorageService cloudinaryStorageService;
 
     @Override
     public List<ProductResponseDTO> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
+        return productRepository.findAll().stream()
                 .map(productMapper::toProductResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -49,33 +43,6 @@ public class ProductServiceImpl implements ProductService {
     public Optional<ProductResponseDTO> getProductById(Long id) {
         return productRepository.findById(id)
                 .map(productMapper::toProductResponseDTO);
-    }
-
-    private String saveImage(MultipartFile photo) {
-        if (photo == null || photo.isEmpty()) {
-            return null;
-        }
-        try {
-            String originalFilename = photo.getOriginalFilename();
-            String fileExtension = "";
-            if (originalFilename != null && originalFilename.contains(".")) {
-                fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            }
-            String uniqueFilename = UUID.randomUUID().toString() + fileExtension;
-
-            Path uploadPath = Paths.get("uploads");
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            Path filePath = uploadPath.resolve(uniqueFilename);
-            Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            return uniqueFilename;
-
-        } catch (IOException e) {
-            throw new RuntimeException("No se pudo guardar la imagen: " + e.getMessage());
-        }
     }
 
     @Override
@@ -87,18 +54,18 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada con el id: " + categoryId));
         product.setCategory(category);
 
-        String photoFilename = saveImage(photo);
-        product.setPhoto(photoFilename);
+        if (photo != null && !photo.isEmpty()) {
+            String photoUrl = cloudinaryStorageService.storeFile(photo);
+            product.setPhoto(photoUrl);
+        }
 
         Product savedProduct = productRepository.save(product);
-
         return productMapper.toProductResponseDTO(savedProduct);
     }
 
     @Override
     public Optional<ProductResponseDTO> updateProduct(Long id, ProductRequestDTO productRequestDTO, MultipartFile photo) {
-        return productRepository.findById(id).map(existingProduct -> {
-
+        return productRepository.findById(id).map((existingProduct) -> {
             productMapper.updateProductFromDto(productRequestDTO, existingProduct);
 
             Long categoryId = productRequestDTO.getCategory().getCategoryId();
@@ -107,12 +74,14 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setCategory(newCategory);
 
             if (photo != null && !photo.isEmpty()) {
-                String newPhotoFilename = saveImage(photo);
-                existingProduct.setPhoto(newPhotoFilename);
+                if (existingProduct.getPhoto() != null && !existingProduct.getPhoto().isEmpty()) {
+                    cloudinaryStorageService.deleteFile(existingProduct.getPhoto());
+                }
+                String newPhotoUrl = cloudinaryStorageService.storeFile(photo);
+                existingProduct.setPhoto(newPhotoUrl);
             }
 
             Product updatedProduct = productRepository.save(existingProduct);
-
             return productMapper.toProductResponseDTO(updatedProduct);
         });
     }
@@ -124,16 +93,11 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + id + " no existe."));
 
         if (product.getPhoto() != null && !product.getPhoto().isEmpty()) {
-            try {
-                Path photoPath = Paths.get("uploads").resolve(product.getPhoto());
-                Files.deleteIfExists(photoPath);
-            } catch (IOException e) {
-            }
+            cloudinaryStorageService.deleteFile(product.getPhoto());
         }
 
         try {
             productRepository.delete(product);
-
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("No se puede eliminar el producto porque está asociado a un Carrito de Compras o Pedido.");
         }

@@ -12,12 +12,12 @@ import com.Hacktualidad.repository.CartRepository;
 import com.Hacktualidad.repository.ProductRepository;
 import com.Hacktualidad.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,13 +44,11 @@ public class CartServiceImpl implements CartService {
                 });
     }
 
-
     private CartDTO buildCartDTO(Cart cart) {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setCartId(cart.getCartId());
 
         List<CartElement> elements = cartElementRepository.findByCart(cart);
-
         List<CartElementDTO> elementDTOs = cartMapper.toCartElementDTOList(elements);
         cartDTO.setItems(elementDTOs);
 
@@ -63,7 +61,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     @Cacheable(value = "carts", key = "#userEmail")
     public CartDTO getMyCart(String userEmail) {
         Cart cart = getOrCreateCart(userEmail);
@@ -127,27 +125,28 @@ public class CartServiceImpl implements CartService {
         Cart cartEntity = cartRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
 
-        if (cartEntity.getItems().isEmpty()) {
+        if (cartEntity.getItems() == null || cartEntity.getItems().isEmpty()) {
             throw new RuntimeException("El carrito está vacío");
         }
+
         for (CartElement item : cartEntity.getItems()) {
             Product product = item.getProduct();
             if (product.getStock() < item.getQuantity()) {
-                throw new RuntimeException("ERROR CRÍTICO: Stock insuficiente: " + product.getName());
+                throw new RuntimeException("ERROR CRÍTICO: Stock insuficiente para el producto: " + product.getName());
             }
-            int nuevoStock = product.getStock() - item.getQuantity();
-            product.setStock(nuevoStock);
+            product.setStock(product.getStock() - item.getQuantity());
             productRepository.save(product);
         }
+
         try {
-            CartDTO cartDTO = getMyCart(userEmail);
+            CartDTO cartDTO = buildCartDTO(cartEntity);
             emailService.sendOrderConfirmation(userEmail, cartDTO);
         } catch (Exception e) {
+            System.err.println("No se pudo enviar el correo de confirmación: " + e.getMessage());
         }
+
+        cartElementRepository.deleteAll(cartEntity.getItems());
         cartEntity.getItems().clear();
         cartRepository.save(cartEntity);
     }
-
-
-
 }

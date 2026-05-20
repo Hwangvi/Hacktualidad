@@ -1,26 +1,26 @@
 package com.Hacktualidad.service;
 
+import com.Hacktualidad.Enums.Role;
 import com.Hacktualidad.dto.LoginRequestDTO;
 import com.Hacktualidad.dto.UserRequestDTO;
 import com.Hacktualidad.dto.UserResponseDTO;
+import com.Hacktualidad.dto.UserUpdateRequestDTO;
 import com.Hacktualidad.entity.User;
 import com.Hacktualidad.mapper.UserMapper;
 import com.Hacktualidad.repository.UserRepository;
-import com.Hacktualidad.Enums.Role;
+import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import com.Hacktualidad.dto.UserUpdateRequestDTO;
-import jakarta.persistence.EntityNotFoundException;
-import java.util.Optional;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -42,25 +42,30 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private FileStorageService fileStorageService;
+    private CloudinaryStorageService cloudinaryStorageService;
 
     @Override
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO, MultipartFile file) {
-        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {  }
-        if (!userRequestDTO.getPassword().equals(userRequestDTO.getConfirmPassword())) {  }
+        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("El email ya está en uso.");
+        }
+
+        if (!userRequestDTO.getPassword().equals(userRequestDTO.getConfirmPassword())) {
+            throw new IllegalArgumentException("Las contraseñas no coinciden.");
+        }
 
         User user = userMapper.toUser(userRequestDTO);
+
         if (file != null && !file.isEmpty()) {
-            String filename = fileStorageService.storeFile(file);
-            user.setPhoto(filename);
+            String photoUrl = cloudinaryStorageService.storeFile(file);
+            user.setPhoto(photoUrl);
         }
 
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user.setRole(Role.USER);
+
         User savedUser = userRepository.save(user);
-
         UserResponseDTO response = userMapper.toUserResponseDTO(savedUser);
-
         kafkaTemplate.send("user-registration-topic", response);
         return response;
     }
@@ -71,12 +76,10 @@ public class UserServiceImpl implements UserService {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword())
             );
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            User user = userRepository.findByEmail(loginRequestDTO.getEmail()).orElseThrow();
+            User user = userRepository.findByEmail(loginRequestDTO.getEmail())
+                    .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado."));
             return Optional.of(userMapper.toUserResponseDTO(user));
-
         } catch (BadCredentialsException e) {
             return Optional.empty();
         }
@@ -90,13 +93,17 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUserFromDto(userUpdateRequestDTO, userToUpdate);
 
         if (file != null && !file.isEmpty()) {
-            String filename = fileStorageService.storeFile(file);
-            userToUpdate.setPhoto(filename);
+            if (userToUpdate.getPhoto() != null && !userToUpdate.getPhoto().isEmpty()) {
+                cloudinaryStorageService.deleteFile(userToUpdate.getPhoto());
+            }
+            String newPhotoUrl = cloudinaryStorageService.storeFile(file);
+            userToUpdate.setPhoto(newPhotoUrl);
         }
 
         User updatedUser = userRepository.save(userToUpdate);
         return userMapper.toUserResponseDTO(updatedUser);
     }
+
     @Override
     public List<UserResponseDTO> findAllUsers() {
         return userRepository.findAll().stream()
@@ -116,6 +123,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
             throw new IllegalArgumentException("El email ya está en uso.");
         }
+
         if (!userRequestDTO.getPassword().equals(userRequestDTO.getConfirmPassword())) {
             throw new IllegalArgumentException("Las contraseñas no coinciden.");
         }
@@ -124,8 +132,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
 
         if (file != null && !file.isEmpty()) {
-            String filename = fileStorageService.storeFile(file);
-            user.setPhoto(filename);
+            String photoUrl = cloudinaryStorageService.storeFile(file);
+            user.setPhoto(photoUrl);
         }
 
         if (userRequestDTO.getRole() == null) {
@@ -140,11 +148,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("No se encontró el usuario con ID: " + id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario con ID: " + id));
+        if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
+            cloudinaryStorageService.deleteFile(user.getPhoto());
         }
-        userRepository.deleteById(id);
+
+        userRepository.delete(user);
     }
-
-
 }

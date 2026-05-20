@@ -26,13 +26,15 @@ public class ForumServiceImpl implements ForumService {
 
     @Autowired
     private PostsRepository postsRepository;
+
     @Autowired
     private ForumTopicRepository forumTopicRepository;
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private FileStorageService fileStorageService;
+    private CloudinaryStorageService cloudinaryStorageService;
 
     @Autowired
     private ForumCommentRepository forumCommentRepository;
@@ -112,6 +114,7 @@ public class ForumServiceImpl implements ForumService {
                 .orElseThrow(() -> new EntityNotFoundException("Post no encontrado con ID: " + postId));
         return forumMapper.toPostResponseDTO(post);
     }
+
     @Override
     public CommentResponseDTO addCommentToPost(Long postId, CommentRequestDTO commentRequestDTO, String userEmail) {
         Posts post = postsRepository.findById(postId)
@@ -139,8 +142,8 @@ public class ForumServiceImpl implements ForumService {
         newTopic.setActive(true);
 
         if (file != null && !file.isEmpty()) {
-            String filename = fileStorageService.storeFile(file);
-            newTopic.setBackgroundImage(filename);
+            String fileUrl = cloudinaryStorageService.storeFile(file);
+            newTopic.setBackgroundImage(fileUrl);
         }
         ForumTopic savedTopic = forumTopicRepository.save(newTopic);
         return forumMapper.toTopicDTO(savedTopic);
@@ -159,10 +162,9 @@ public class ForumServiceImpl implements ForumService {
 
         String backgroundImage = topicToDelete.getBackgroundImage();
         if (backgroundImage != null && !backgroundImage.isEmpty()) {
-            fileStorageService.deleteFile(backgroundImage);
+            cloudinaryStorageService.deleteFile(backgroundImage);
         }
         forumTopicRepository.delete(topicToDelete);
-
     }
 
     @Override
@@ -179,8 +181,4 @@ public class ForumServiceImpl implements ForumService {
 
         forumCommentRepository.delete(comment);
     }
-
-
-
-
 }

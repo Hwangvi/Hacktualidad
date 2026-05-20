@@ -35,7 +35,7 @@ class ForumServiceImplTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private FileStorageService fileStorageService;
+    private CloudinaryStorageService cloudinaryStorageService;
     @Mock
     private ForumCommentRepository forumCommentRepository;
     @Mock
@@ -99,14 +99,14 @@ class ForumServiceImplTest {
         MultipartFile file = mock(MultipartFile.class);
 
         when(file.isEmpty()).thenReturn(false);
-        when(fileStorageService.storeFile(file)).thenReturn("image.jpg");
+        when(cloudinaryStorageService.storeFile(file)).thenReturn("image.jpg");
         when(forumTopicRepository.save(any(ForumTopic.class))).thenReturn(topic);
         when(forumMapper.toTopicDTO(any(ForumTopic.class))).thenReturn(topicDTO);
 
         TopicDTO result = forumService.createTopic(topicDTO, file);
 
         assertNotNull(result);
-        verify(fileStorageService).storeFile(file);
+        verify(cloudinaryStorageService).storeFile(file);
         verify(forumTopicRepository).save(any(ForumTopic.class));
     }
 
@@ -117,7 +117,7 @@ class ForumServiceImplTest {
 
         forumService.deleteTopic(10);
 
-        verify(fileStorageService).deleteFile("image.jpg");
+        verify(cloudinaryStorageService).deleteFile("image.jpg");
         verify(forumTopicRepository).delete(topic);
     }
 

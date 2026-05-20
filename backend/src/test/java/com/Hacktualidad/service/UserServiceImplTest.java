@@ -29,7 +29,7 @@ class UserServiceImplTest {
     @Mock private PasswordEncoder passwordEncoder;
     @Mock private AuthenticationManager authenticationManager;
     @Mock private UserMapper userMapper;
-    @Mock private FileStorageService fileStorageService;
+    @Mock private CloudinaryStorageService cloudinaryStorageService;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -58,7 +58,7 @@ class UserServiceImplTest {
 
         assertNotNull(response);
         verify(userRepository).save(userEntity);
-        verify(fileStorageService, never()).storeFile(any());
+        verify(cloudinaryStorageService, never()).storeFile(any());
     }
 
     @Test
@@ -88,13 +88,13 @@ class UserServiceImplTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(file.isEmpty()).thenReturn(false);
-        when(fileStorageService.storeFile(file)).thenReturn("new-photo.jpg");
+        when(cloudinaryStorageService.storeFile(file)).thenReturn("new-photo.jpg");
         when(userRepository.save(user)).thenReturn(user);
         when(userMapper.toUserResponseDTO(user)).thenReturn(new UserResponseDTO());
 
         userService.updateUser(userId, updateDTO, file);
 
         assertEquals("new-photo.jpg", user.getPhoto());
-        verify(fileStorageService).storeFile(file);
+        verify(cloudinaryStorageService).storeFile(file);
     }
 }
